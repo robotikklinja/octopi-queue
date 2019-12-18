@@ -4,6 +4,7 @@ export interface QueueItem {
   purpose: Purpose
   description: string
   estimated: number
+  printer: number
 }
 
 export interface Queue {

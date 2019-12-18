@@ -1,7 +1,20 @@
 import path from 'path'
 import { Request, Response } from 'express'
 import fs from 'fs-extra'
-import { Queue, QueueItem } from '../../shared/shared'
+
+export type Purpose = 'School' | 'Personal'
+export interface QueueItem {
+  author: string
+  purpose: Purpose
+  description: string
+  estimated: number
+  printer: number
+}
+
+export interface Queue {
+  size: number
+  items: Array<QueueItem>
+}
 
 export const STORAGE_PATH = path.join(__dirname, '../storage')
 
@@ -22,6 +35,7 @@ export function validateRecord(record: object): boolean {
     && record.hasOwnProperty('purpose')
     && record.hasOwnProperty('description')
     && record.hasOwnProperty('estimated')
+    && record.hasOwnProperty('printer')
 }
 
 export async function addRecord(record: QueueItem): Promise<boolean> {

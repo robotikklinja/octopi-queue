@@ -16,6 +16,8 @@ import {
   withRouter,
   useLocation
 } from 'react-router-dom'
+import { Form } from './views/Form'
+import { PrinterQueue } from './views/PrinterQueue'
 
 function NavigationTabComponent({ history }: PropsWithChildren<{}> & RouteComponentProps) {
   const { pathname } = useLocation()
@@ -44,14 +46,15 @@ export function App() {
 
           <EuiSpacer/>
           <NavigationTab />
+          <EuiSpacer />
 
           <Switch>
             <Route path="/submit">
-              <h1>Submit</h1>
+              <Form />
             </Route>
 
             <Route path="/">
-              <h1>Queue</h1>
+              <PrinterQueue />
             </Route>
           </Switch>
         </EuiPageBody>
