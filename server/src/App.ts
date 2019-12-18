@@ -37,3 +37,7 @@ export async function addRecord(record: QueueItem): Promise<boolean> {
 
   return false
 }
+
+export async function setStorage(storage: Queue) {
+  await fs.writeFile(path.join(STORAGE_PATH, 'store.json'), JSON.stringify(storage))
+}
