@@ -12,12 +12,14 @@ import {
 } from '@elastic/eui'
 import { Queue, QueueItem } from '../app/types'
 
+const { hostname } = window.location
+
 function PrinterQueues() {
   const [left, setLeft] = useState<Queue>({size: 0, items: []})
   const [right, setRight] = useState<Queue>({size: 0, items: []})
 
   useEffect(() => {
-    fetch('http://localhost:9010/api/v1/queue')
+    fetch(`http://${hostname}:9010/api/v1/queue`)
       .then(res => res.json())
       .then((res) => {
         const leftQueue = res.items.filter((x: QueueItem) => x.printer === 0)
@@ -29,7 +31,7 @@ function PrinterQueues() {
   })
 
   function onClick(printer: number) {
-    fetch(`http://localhost:9010/api/v1/queue/${printer}/complete`, { method: 'DELETE' })
+    fetch(`http://${hostname}:9010/api/v1/queue/${printer}/complete`, { method: 'DELETE' })
       .then(() => {
         if (printer === 0) {
           left.items.shift()

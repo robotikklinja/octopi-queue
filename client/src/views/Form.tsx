@@ -13,6 +13,8 @@ import {
   EuiTitle
 } from '@elastic/eui'
 
+const { hostname } = window.location
+
 export function FormComponent({ history }: PropsWithChildren<{}> & RouteComponentProps) {
   const [author, setAuthor] = useState("")
   const [estimated, setEstimated] = useState(60)
@@ -23,7 +25,7 @@ export function FormComponent({ history }: PropsWithChildren<{}> & RouteComponen
   const onSubmit = (event: any) => {
     event.preventDefault()
 
-    fetch('http://localhost:9010/api/v1/queue/new', {
+    fetch(`http://${hostname}:9010/api/v1/queue/new`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
