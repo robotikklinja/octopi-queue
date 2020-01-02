@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useState, PropsWithChildren } from 'react'
+import React, { useEffect, Fragment, useState } from 'react'
 import {
   EuiTitle,
   EuiSpacer,
@@ -14,9 +14,14 @@ import { Queue, QueueItem } from '../app/types'
 
 const { hostname } = window.location
 
+console.info(`
+OctoPi Queue Client Started on ${hostname}:2000
+`)
+
 function PrinterQueues() {
   const [left, setLeft] = useState<Queue>({size: 0, items: []})
   const [right, setRight] = useState<Queue>({size: 0, items: []})
+  const [updates, setUpdates] = useState(0)
 
   useEffect(() => {
     fetch(`http://${hostname}:9010/api/v1/queue`)
@@ -28,18 +33,12 @@ function PrinterQueues() {
         setLeft({size: leftQueue.length, items: leftQueue})
         setRight({size: rightQueue.length, items: rightQueue})
       })
-  })
+  }, [updates])
 
   function onClick(printer: number) {
     fetch(`http://${hostname}:9010/api/v1/queue/${printer}/complete`, { method: 'DELETE' })
       .then(() => {
-        if (printer === 0) {
-          left.items.shift()
-          setLeft(left)
-        } else {
-          right.items.shift()
-          setRight(right)
-        }
+        setUpdates(s => s + 1)
       })
   }
 
