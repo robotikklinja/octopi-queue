@@ -12,7 +12,7 @@ import {
 } from '@elastic/eui'
 import { Queue, QueueItem } from '../app/types'
 
-const { hostname } = window.location
+const {hostname} = window.location
 
 console.info(`
 OctoPi Queue Client Started on ${hostname}:2000
@@ -36,7 +36,7 @@ function PrinterQueues() {
   }, [updates])
 
   function onClick(printer: number) {
-    fetch(`http://${hostname}:9010/api/v1/queue/${printer}/complete`, { method: 'DELETE' })
+    fetch(`http://${hostname}:9010/api/v1/queue/${printer}/complete`, {method: 'DELETE'})
       .then(() => {
         setUpdates(s => s + 1)
       })
@@ -49,34 +49,39 @@ function PrinterQueues() {
           <h2>Printer 1</h2>
         </EuiTitle>
 
-        <EuiButton fill onClick={() => onClick(0)} fullWidth={true}>Mark job as Complete</EuiButton>
+        {left.items.length ?
+        <EuiButton fill onClick={() => onClick(0)} fullWidth={true}>Mark job as Complete</EuiButton> : null}
         <EuiSpacer/>
 
         {left.items.map(item => (
-          <EuiPanel key={`${item.author}-${item.description}`}>
-            <EuiTitle>
-              <h3>{item.author}</h3>
-            </EuiTitle>
+          <Fragment>
+            <EuiPanel key={`${item.author}-${item.description}`}>
+              <EuiTitle>
+                <h3>{item.author}</h3>
+              </EuiTitle>
 
-            <EuiFlexGroup>
-              <EuiFlexItem>
-                <EuiDescriptionList>
-                  <EuiDescriptionListTitle>Estimated Duration</EuiDescriptionListTitle>
-                  <EuiDescriptionListDescription>{item.estimated} min</EuiDescriptionListDescription>
+              <EuiFlexGroup>
+                <EuiFlexItem>
+                  <EuiDescriptionList>
+                    <EuiDescriptionListTitle>Estimated Duration</EuiDescriptionListTitle>
+                    <EuiDescriptionListDescription>{item.estimated} min</EuiDescriptionListDescription>
 
-                  <EuiDescriptionListTitle>Purpose</EuiDescriptionListTitle>
-                  <EuiDescriptionListDescription>{item.purpose}</EuiDescriptionListDescription>
-                </EuiDescriptionList>
-              </EuiFlexItem>
+                    <EuiDescriptionListTitle>Purpose</EuiDescriptionListTitle>
+                    <EuiDescriptionListDescription>{item.purpose}</EuiDescriptionListDescription>
+                  </EuiDescriptionList>
+                </EuiFlexItem>
 
-              <EuiFlexItem>
-                <EuiDescriptionList>
-                  <EuiDescriptionListTitle>Brief</EuiDescriptionListTitle>
-                  <EuiDescriptionListDescription>{item.description}</EuiDescriptionListDescription>
-                </EuiDescriptionList>
-              </EuiFlexItem>
-            </EuiFlexGroup>
-          </EuiPanel>
+                <EuiFlexItem>
+                  <EuiDescriptionList>
+                    <EuiDescriptionListTitle>Brief</EuiDescriptionListTitle>
+                    <EuiDescriptionListDescription>{item.description}</EuiDescriptionListDescription>
+                  </EuiDescriptionList>
+                </EuiFlexItem>
+              </EuiFlexGroup>
+            </EuiPanel>
+
+            <EuiSpacer/>
+          </Fragment>
         ))}
       </EuiFlexItem>
 
@@ -85,34 +90,38 @@ function PrinterQueues() {
           <h1>Printer 2</h1>
         </EuiTitle>
 
-        <EuiButton fill onClick={() => onClick(1)} fullWidth={true}>Mark job as Complete</EuiButton>
-        <EuiSpacer />
+        {right.items.length ?
+        <EuiButton fill onClick={() => onClick(1)} fullWidth={true}>Mark job as Complete</EuiButton> : null}
+        <EuiSpacer/>
 
         {right.items.map(item => (
-          <EuiPanel key={`${item.author}-${item.description}`}>
-            <EuiTitle>
-              <h3>{item.author}</h3>
-            </EuiTitle>
+          <Fragment>
+            <EuiPanel key={`${item.author}-${item.description}`}>
+              <EuiTitle>
+                <h3>{item.author}</h3>
+              </EuiTitle>
 
-            <EuiFlexGroup>
-              <EuiFlexItem>
-                <EuiDescriptionList>
-                  <EuiDescriptionListTitle>Estimated Duration</EuiDescriptionListTitle>
-                  <EuiDescriptionListDescription>{item.estimated} min</EuiDescriptionListDescription>
+              <EuiFlexGroup>
+                <EuiFlexItem>
+                  <EuiDescriptionList>
+                    <EuiDescriptionListTitle>Estimated Duration</EuiDescriptionListTitle>
+                    <EuiDescriptionListDescription>{item.estimated} min</EuiDescriptionListDescription>
 
-                  <EuiDescriptionListTitle>Purpose</EuiDescriptionListTitle>
-                  <EuiDescriptionListDescription>{item.purpose}</EuiDescriptionListDescription>
-                </EuiDescriptionList>
-              </EuiFlexItem>
+                    <EuiDescriptionListTitle>Purpose</EuiDescriptionListTitle>
+                    <EuiDescriptionListDescription>{item.purpose}</EuiDescriptionListDescription>
+                  </EuiDescriptionList>
+                </EuiFlexItem>
 
-              <EuiFlexItem>
-                <EuiDescriptionList>
-                  <EuiDescriptionListTitle>Brief</EuiDescriptionListTitle>
-                  <EuiDescriptionListDescription>{item.description}</EuiDescriptionListDescription>
-                </EuiDescriptionList>
-              </EuiFlexItem>
-            </EuiFlexGroup>
-          </EuiPanel>
+                <EuiFlexItem>
+                  <EuiDescriptionList>
+                    <EuiDescriptionListTitle>Brief</EuiDescriptionListTitle>
+                    <EuiDescriptionListDescription>{item.description}</EuiDescriptionListDescription>
+                  </EuiDescriptionList>
+                </EuiFlexItem>
+              </EuiFlexGroup>
+            </EuiPanel>
+            <EuiSpacer/>
+          </Fragment>
         ))}
       </EuiFlexItem>
     </Fragment>

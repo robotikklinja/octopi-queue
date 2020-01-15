@@ -16,6 +16,6 @@
     "typescript": "^3.7.2"
   },
   "scripts": {
-    "start": "tsc && node dist/src/App.js"
+    "start": "tsc && node dist"
   }
 }
